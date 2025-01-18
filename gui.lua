@@ -1,8 +1,3 @@
---	Quex "Library"
---
---	Version: 1.1-5
---	Last edited: 3/11/23 10:29 PM -- canceled 3/24/23 12:27 AM
---	Last added: key requirement option
 local Genv = (getgenv or function() return _G end)();
 
 local UserInputService = game:GetService("UserInputService");
@@ -579,14 +574,10 @@ return function(GuiTitle, KeyTable, GuiToggleKeyBind, OnCloseCallback)
     MinimizeButton.Name = "MinimizeButton"
     MinimizeButton.Parent = Topbar
     MinimizeButton.AnchorPoint = Vector2.new(1, 0)
-    MinimizeButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    MinimizeButton.BackgroundTransparency = 1
-    MinimizeButton.BorderSizePixel = 0
     MinimizeButton.Position = UDim2.new(1, -30, 0, 10)
-    MinimizeButton.Size = UDim2.new(0, 10, 0, 10)
+    MinimizeButton.Size = UDim2.new(0, 20, 0, 20)
     MinimizeButton.Image = "rbxassetid://6023426926"
-    MinimizeButton.ImageTransparency = 0.5
-    MinimizeButton.ScaleType = Enum.ScaleType.Fit
+    MinimizeButton.BackgroundTransparency = 1
     
     local Minimized = false
     local OriginalSize = Main.Size
@@ -594,7 +585,7 @@ return function(GuiTitle, KeyTable, GuiToggleKeyBind, OnCloseCallback)
     MinimizeButton.MouseButton1Click:Connect(function()
         if not Minimized then
             Minimized = true
-            Main.Size = UDim2.new(0, 450, 0, 30)
+            Main.Size = UDim2.new(0, Main.Size.X.Offset, 0, 30)
             MinimizeButton.Image = "rbxassetid://6023565891"
         else
             Minimized = false
@@ -602,6 +593,7 @@ return function(GuiTitle, KeyTable, GuiToggleKeyBind, OnCloseCallback)
             MinimizeButton.Image = "rbxassetid://6023426926"
         end
     end)
+    
     
     
     local Main = Instance.new("Frame")
