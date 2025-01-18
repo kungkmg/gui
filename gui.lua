@@ -582,9 +582,9 @@ return function(GuiTitle, KeyTable, GuiToggleKeyBind, OnCloseCallback)
     MinimizeButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     MinimizeButton.BackgroundTransparency = 1
     MinimizeButton.BorderSizePixel = 0
-    MinimizeButton.Position = UDim2.new(1, -30, 0, 10)-- วางปุ่มข้างปุ่ม Close
+    MinimizeButton.Position = UDim2.new(1, -30, 0, 10)
     MinimizeButton.Size = UDim2.new(0, 10, 0, 10)
-    MinimizeButton.Image = "rbxassetid://6023426926" -- ไอคอน "ย่อ"
+    MinimizeButton.Image = "rbxassetid://6023426926"
     MinimizeButton.ImageTransparency = 0.5
     MinimizeButton.ScaleType = Enum.ScaleType.Fit
     
@@ -594,38 +594,61 @@ return function(GuiTitle, KeyTable, GuiToggleKeyBind, OnCloseCallback)
     MinimizeButton.MouseButton1Click:Connect(function()
         if not Minimized then
             Minimized = true
-            Main.Size = UDim2.new(0, 450, 0, 30)-- ย่อให้เหลือแค่ Topbar
-            MinimizeButton.Image = "rbxassetid://6023565891" -- เปลี่ยนไอคอนเป็น "ขยาย"
+            Main.Size = UDim2.new(0, 450, 0, 30)
+            MinimizeButton.Image = "rbxassetid://6023565891"
         else
             Minimized = false
-            Main.Size = OriginalSize -- คืนค่าขนาดเดิม
-            MinimizeButton.Image = "rbxassetid://6023426926" -- เปลี่ยนไอคอนกลับเป็น "ย่อ"
+            Main.Size = OriginalSize
+            MinimizeButton.Image = "rbxassetid://6023426926"
         end
     end)
+    
+    
+    local Main = Instance.new("Frame")
+    Main.Name = ""
+    Main.Parent = Library
+    Main.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    Main.BackgroundTransparency = 0.7
+    Main.Size = UDim2.new(0, 450, 0, 250)
+    Main.Position = UDim2.new(0.5, -225, 0.5, -125)
     
     local Topbar = Instance.new("Frame")
     Topbar.Name = ""
     Topbar.Parent = Main
     Topbar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     Topbar.BackgroundTransparency = 1
-    Topbar.BorderSizePixel = 0
-    Topbar.ClipsDescendants = true
     Topbar.Size = UDim2.new(1, 0, 0, 30)
     
     local Close = Instance.new("ImageButton")
-    Close.Name = ""
+    Close.Name = "Close"
     Close.Parent = Topbar
     Close.AnchorPoint = Vector2.new(1, 0)
-    Close.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    Close.BackgroundTransparency = 1
-    Close.BorderSizePixel = 0
     Close.Position = UDim2.new(1, -10, 0, 10)
     Close.Size = UDim2.new(0, 10, 0, 10)
-    Close.ZIndex = 2
-    Close.AutoButtonColor = false
     Close.Image = "rbxassetid://10494258175"
-    Close.ImageTransparency = 0.5
-    Close.ScaleType = Enum.ScaleType.Fit
+    
+    local MinimizeButton = Instance.new("ImageButton")
+    MinimizeButton.Name = "MinimizeButton"
+    MinimizeButton.Parent = Topbar
+    MinimizeButton.AnchorPoint = Vector2.new(1, 0)
+    MinimizeButton.Position = UDim2.new(1, -30, 0, 10)
+    MinimizeButton.Size = UDim2.new(0, 10, 0, 10)
+    MinimizeButton.Image = "rbxassetid://6023426926"
+    
+    local Minimized = false
+    local OriginalSize = Main.Size
+    MinimizeButton.MouseButton1Click:Connect(function()
+        if not Minimized then
+            Minimized = true
+            Main.Size = UDim2.new(0, 450, 0, 30)
+            MinimizeButton.Image = "rbxassetid://6023565891"
+        else
+            Minimized = false
+            Main.Size = OriginalSize
+            MinimizeButton.Image = "rbxassetid://6023426926"
+        end
+    end)
+    
     
     
     ManageSignalsTo("Add", "Gui.Close-MouseButton1Click", Close.MouseButton1Click:Connect(function()
