@@ -459,6 +459,7 @@ return function(GuiTitle, KeyTable, GuiToggleKeyBind, OnCloseCallback)
     local UIStroke = Instance.new("UIStroke");
     local Topbar = Instance.new("Frame");
     local Close = Instance.new("ImageButton");
+    local MinimizeButton = Instance.new("ImageButton")
     local Title = Instance.new("TextButton");
     local SelectionBar = Instance.new("Frame");
     local SelectionContainer = Instance.new("ScrollingFrame");
@@ -467,12 +468,40 @@ return function(GuiTitle, KeyTable, GuiToggleKeyBind, OnCloseCallback)
     local Frame2 = Instance.new("Frame");
     local Containers = Instance.new("Folder");
     
+    local Minimized = false
+    local OriginalSize = Main.Size
+    local OriginalPosition = SelectionBar.Position
+    
+    MinimizeButton.MouseButton1Click:Connect(function()
+        if not Minimized then
+            Minimized = true
+            Main.Size = UDim2.new(Main.Size.X.Scale, Main.Size.X.Offset, 0, 30)
+            SelectionBar.Visible = false
+            Containers.Visible = false
+            MinimizeButton.Image = "rbxassetid://6023565891"
+        else
+            Minimized = false
+            Main.Size = OriginalSize
+            SelectionBar.Visible = true
+            Containers.Visible = true
+            MinimizeButton.Image = "rbxassetid://6023426926"
+        end
+    end)
+    
     Main.Name = "";
     Main.Parent = Library;
     Main.BackgroundColor3 = Color3.fromRGB(0, 0, 0);
     Main.BackgroundTransparency = 0.7;
     Main.Size = UDim2.new(0, 450, 0, 250);
     Main.Position = UDim2.new(0, (workspace.CurrentCamera.ViewportSize.X / 2) - (Main.Size.X.Offset / 2), 0, (workspace.CurrentCamera.ViewportSize.Y / 2) - (Main.Size.Y.Offset / 2));
+    
+    MinimizeButton.Name = "MinimizeButton"
+    MinimizeButton.Parent = Topbar
+    MinimizeButton.AnchorPoint = Vector2.new(1, 0)
+    MinimizeButton.Position = UDim2.new(1, -30, 0, 10)
+    MinimizeButton.Size = UDim2.new(0, 20, 0, 20)
+    MinimizeButton.Image = "rbxassetid://6023426926"
+    MinimizeButton.BackgroundTransparency = 1 
     
     UICorner.Name = "";
     UICorner.Parent = Main;
@@ -569,78 +598,6 @@ return function(GuiTitle, KeyTable, GuiToggleKeyBind, OnCloseCallback)
     
     Containers.Name = "Containers";
     Containers.Parent = Main;
-    
-    local MinimizeButton = Instance.new("ImageButton")
-    MinimizeButton.Name = "MinimizeButton"
-    MinimizeButton.Parent = Topbar
-    MinimizeButton.AnchorPoint = Vector2.new(1, 0)
-    MinimizeButton.Position = UDim2.new(1, -30, 0, 10)
-    MinimizeButton.Size = UDim2.new(0, 20, 0, 20)
-    MinimizeButton.Image = "rbxassetid://6023426926"
-    MinimizeButton.BackgroundTransparency = 1
-    
-    local Minimized = false
-    local OriginalSize = Main.Size
-    
-    MinimizeButton.MouseButton1Click:Connect(function()
-        if not Minimized then
-            Minimized = true
-            Main.Size = UDim2.new(0, Main.Size.X.Offset, 0, 30)
-            MinimizeButton.Image = "rbxassetid://6023565891"
-        else
-            Minimized = false
-            Main.Size = OriginalSize
-            MinimizeButton.Image = "rbxassetid://6023426926"
-        end
-    end)
-    
-    
-    
-    local Main = Instance.new("Frame")
-    Main.Name = ""
-    Main.Parent = Library
-    Main.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    Main.BackgroundTransparency = 0.7
-    Main.Size = UDim2.new(0, 450, 0, 250)
-    Main.Position = UDim2.new(0.5, -225, 0.5, -125)
-    
-    local Topbar = Instance.new("Frame")
-    Topbar.Name = ""
-    Topbar.Parent = Main
-    Topbar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    Topbar.BackgroundTransparency = 1
-    Topbar.Size = UDim2.new(1, 0, 0, 30)
-    
-    local Close = Instance.new("ImageButton")
-    Close.Name = "Close"
-    Close.Parent = Topbar
-    Close.AnchorPoint = Vector2.new(1, 0)
-    Close.Position = UDim2.new(1, -10, 0, 10)
-    Close.Size = UDim2.new(0, 10, 0, 10)
-    Close.Image = "rbxassetid://10494258175"
-    
-    local MinimizeButton = Instance.new("ImageButton")
-    MinimizeButton.Name = "MinimizeButton"
-    MinimizeButton.Parent = Topbar
-    MinimizeButton.AnchorPoint = Vector2.new(1, 0)
-    MinimizeButton.Position = UDim2.new(1, -30, 0, 10)
-    MinimizeButton.Size = UDim2.new(0, 10, 0, 10)
-    MinimizeButton.Image = "rbxassetid://6023426926"
-    
-    local Minimized = false
-    local OriginalSize = Main.Size
-    MinimizeButton.MouseButton1Click:Connect(function()
-        if not Minimized then
-            Minimized = true
-            Main.Size = UDim2.new(0, 450, 0, 30)
-            MinimizeButton.Image = "rbxassetid://6023565891"
-        else
-            Minimized = false
-            Main.Size = OriginalSize
-            MinimizeButton.Image = "rbxassetid://6023426926"
-        end
-    end)
-    
     
     
     ManageSignalsTo("Add", "Gui.Close-MouseButton1Click", Close.MouseButton1Click:Connect(function()
